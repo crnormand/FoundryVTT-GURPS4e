@@ -1,63 +1,58 @@
 {
-	"name": "gurps",
-	"title": "GURPS 4th Ed. Game Aid (Unofficial)",
-	"description": "A game aid to help play GURPS 4e for Foundry VTT",
-	"version": "0.14.13",
-	"minimumCoreVersion": "9",
-	"compatibleCoreVersion": "9",
-	"templateVersion": 2,
-	"author": "Chris Normand/Nose66",
-	"esmodules": [
-		"module/gurps.js",
-		"lib/xregexp-all.js"
-	],
-	"scripts": [
-		"scripts/jquery.tinycolorpicker.js"
-	],
-	"styles": [
-		"styles/simple.css",
-		"styles/css_boilerplate.css",
-		"styles/simplified.css",
-		"styles/npc-input.css",
-		"styles/apps.css",
-		"styles/color-character-sheet.css",
-		"styles/tinycolorpicker.css"
-	],
-	"packs": [],
-	"languages": [
-		{
-			"lang": "en",
-			"name": "English",
-			"path": "lang/en.json"
-		},
-		{
-			"lang": "pt-BR",
-			"name": "Português (Brasil)",
-			"path": "lang/pt_br.json"
-		},
-		{
-			"lang": "de",
-			"name": "Deutsch (German)",
-			"path": "lang/de.json"
-		},
-		{
-			"lang": "ru",
-			"name": "русский (Russian)",
-			"path": "lang/ru.json"
-		},
-		{
-			"lang": "Fr",
-			"name": "French",
-			"path": "lang/fr.json"
-		}
-	],
-	"gridDistance": 1,
-	"gridUnits": "yd",
-	"primaryTokenAttribute": "HP",
-	"secondaryTokenAttribute": "FP",
-	"url": "https://github.com/crnormand/gurps",
-	"manifest": "https://raw.githubusercontent.com/crnormand/gurps/release/system.json",
-	"download": "https://github.com/crnormand/gurps/archive/0.14.10.zip",
-	"socket": true,
-	"license": "LICENSE.txt"
+  "name": "gurps",
+  "title": "GURPS 4th Ed. Game Aid (Unofficial)",
+  "description": "A game aid to help play GURPS 4e for Foundry VTT",
+  "version": "0.14.14",
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "9",
+  "templateVersion": 2,
+  "author": "Chris Normand/Nose66",
+  "esmodules": ["module/gurps.js", "lib/xregexp-all.js"],
+  "scripts": ["scripts/jquery.tinycolorpicker.js"],
+  "styles": [
+    "styles/simple.css",
+    "styles/css_boilerplate.css",
+    "styles/simplified.css",
+    "styles/npc-input.css",
+    "styles/apps.css",
+    "styles/color-character-sheet.css",
+    "styles/tinycolorpicker.css"
+  ],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt_br.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch (German)",
+      "path": "lang/de.json"
+    },
+    {
+      "lang": "ru",
+      "name": "русский (Russian)",
+      "path": "lang/ru.json"
+    },
+    {
+      "lang": "Fr",
+      "name": "French",
+      "path": "lang/fr.json"
+    }
+  ],
+  "gridDistance": 1,
+  "gridUnits": "yd",
+  "primaryTokenAttribute": "HP",
+  "secondaryTokenAttribute": "FP",
+  "url": "https://github.com/crnormand/gurps",
+  "manifest": "https://raw.githubusercontent.com/crnormand/gurps/release/system.json",
+  "download": "https://github.com/crnormand/gurps/archive/0.14.14.zip",
+  "socket": true,
+  "license": "LICENSE.txt"
 }

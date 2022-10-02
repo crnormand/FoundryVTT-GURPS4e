@@ -20,7 +20,7 @@ export class ItemImporter {
     if (j.type !== 'equipment_list') {
       return ui.notifications.error('The file you uploaded is not a GCS Equipment Library!')
     }
-    if (j.version !== 2) {
+    if (![2, 4].includes(j.version)) {
       return ui.notifications.error('The file you uploaded is not of the right version!')
     }
     let pack = game.packs.find(p => p.metadata.name === filename)
