@@ -193,7 +193,7 @@ export class GurpsActor extends Actor {
 				orig = []
 			}
 		}
-		for (const item of good) await this.addItemData(item.system) // re-add the item equipment and features
+		for (const item of good) await this.addItemData(item.data.data) // re-add the item equipment and features
 
 		await this.update({ '_stats.systemVersion': game.system.version }, { diff: false, render: false })
 		// Set custom trackers based on templates.  should be last because it may need other data to initialize...
@@ -3623,7 +3623,7 @@ export class GurpsActor extends Actor {
 						await this.updateEqtCount(destKey, destEqt.count + qty)
 					} else {
 						let item = /** @type {GurpsItem} */ (srcActor.items.get(eqt.itemid))
-						item.system.eqt.count = qty
+						item.data.data.eqt.count = qty
 						await this.addNewItemData(item.data)
 					}
 					if (qty >= eqt.count) await srcActor.deleteEquipment(dragData.key)
@@ -4068,7 +4068,7 @@ export class GurpsActor extends Actor {
 			let rawItem = this.items.get(srceqt.itemid)
 			if (rawItem) {
 				let item = GurpsItem.asGurpsItem(rawItem)
-				item.system.eqt.count = count
+				item.data.data.eqt.count = count
 				await this.addNewItemData(item.data, targetkey)
 				await this.updateParentOf(targetkey, true)
 			}
