@@ -365,7 +365,7 @@ export class GurpsActor extends Actor {
    */
   async removeModEffectFor(reference) {
     let userMods = foundry.utils.getProperty(this.system, 'conditions.usermods') || []
-    let newMods = userMods.filter(m => !m.includes(reference) || m.includes('@man:'))
+    let newMods = userMods.filter(m => !m.includes(reference) || m.includes('@man:') || !m.includes('@eft:'))
     await this.internalUpdate({ 'system.conditions.usermods': newMods })
   }
 
@@ -376,7 +376,8 @@ export class GurpsActor extends Actor {
    * @returns {object}
    */
   applyItemModEffects(commit, append = false) {
-    const userMods = append ? foundry.utils.getProperty(this.system, 'conditions.usermods') || [] : []
+    const allUserMods = append ? foundry.utils.getProperty(this.system, 'conditions.usermods') || [] : []
+    const userMods = allUserMods.filter(m => !m.includes('@eft:'))
     let newMods = []
 
     if (game.settings.get(settings.SYSTEM_NAME, settings.SETTING_USE_FOUNDRY_ITEMS)) {

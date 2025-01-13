@@ -132,12 +132,16 @@ export class EffectModifierPopout extends Application {
           } else if (itemReference.match(/\w{3}:/)) {
             const refType = itemReference.match(/(\w{3}):/)[1]
             const refValue = itemReference.match(/\w{3}:(\S+)/)[1]
-            const maneuver = Maneuvers.getManeuver(refValue)
             switch (refType) {
               case 'man':
+                const maneuver = Maneuvers.getManeuver(refValue)
                 obj.name = game.i18n.localize(maneuver.label)
                 obj.type = 'maneuver'
                 break
+              case 'eft':
+                const effect = this._token?.actor.effects.get(refValue)
+                obj.name = effect.name || game.i18n.localize('GURPS.ActiveEffect')
+                obj.type = 'active-effect'
             }
           } else {
             obj = this._token?.actor.items.get(itemReference) || {}
@@ -317,10 +321,18 @@ export class EffectModifierPopout extends Application {
       this._token.actor.sheet?.render(true)
       return
     }
-    if (!!itemId && itemId !== 'custom' && itemType !== 'maneuver') {
+    if (!!itemId && itemId !== 'custom' && itemType !== 'maneuver' && itemType !== 'active-effect') {
       const item = this._token.actor.items.get(itemId)
       if (item) {
         item.sheet.render(true)
+      }
+      return
+    }
+    if (!!itemId && itemType === 'active-effect') {
+      const effectId = itemId.split(':')[1]
+      const effect = this._token.actor.effects.get(effectId)
+      if (effect) {
+        effect.sheet.render(true)
       }
       return
     }

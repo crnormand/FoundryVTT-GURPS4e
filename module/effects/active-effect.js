@@ -66,6 +66,39 @@ export default class GurpsActiveEffect extends ActiveEffect {
    */
   static _update(_effect, _data, _options, _userId) {
     console.debug('update ', _effect)
+    if (canvas.tokens.controlled.length > 0) {
+      canvas.tokens.controlled[0].document.setFlag('gurps', 'lastUpdate', new Date().getTime().toString())
+    }
+  }
+
+  get allUserModKeys() {
+    return ['system.conditions.usermods', 'system.conditions.self.modifiers', 'system.conditions.target.modifiers']
+  }
+
+  /**
+   * Add origin tag to ActiveEffect which affects user mods.
+   *
+   * Foundry will add/remove automatically the modifiers added in the Actor User Mods array.
+   * If we do not correctly identify the effect, it will be duplicated on the usermods list.
+   * This method adds an origin tag to the effect, so we can identify it later.
+   *
+   * @param changed - changed fields on the ActiveEffect
+   * @param options
+   * @param user
+   * @returns {Promise<boolean|*|undefined>}
+   * @private
+   */
+  async _preUpdate(changed, options, user) {
+    const effectIdTag = `@eft:${this._id}`
+    changed.changes?.map(effect => {
+      if (this.allUserModKeys.includes(effect.key) && !effect.value.includes(effectIdTag)) {
+        // If exists a bad reference on the line, like `@bad-dog123`, let's remove it first
+        const badRefRegex = /@\S+/g
+        effect.value = effect.value.replace(badRefRegex, '')
+        effect.value = `${effect.value} ${effectIdTag}`
+      }
+    })
+    return await super._preUpdate(changed, options, user)
   }
 
   /**

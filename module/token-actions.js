@@ -242,7 +242,7 @@ export class TokenActions {
         uuid: e.uuid,
         name: e.name,
         originalName: e.originalName,
-        startAt: 0,
+        startAt: undefined,
         targetToken: undefined,
         key: `system.ranged.${_k}`,
       }
@@ -391,7 +391,7 @@ export class TokenActions {
 
     const allModifiers = await foundry.utils
       .getProperty(this.actor, 'system.conditions.usermods')
-      .filter(m => !m.includes('#maneuver'))
+      .filter(m => !m.includes('#maneuver') && !m.includes('@eft:'))
     const maneuverModifiers = []
     if (this.toHitBonus !== 0) {
       const signal = this.toHitBonus > 0 ? '+' : '-'
@@ -453,7 +453,6 @@ export class TokenActions {
     this.extraActions = 0
     this.extraBlocks = 0
     this.rapidStrikeBonus = 0
-    this.currentAim = this._getInitialAim()
     this.currentParry = this._getInitialParry()
   }
 
@@ -642,11 +641,13 @@ export class TokenActions {
       case 'aim':
         Object.keys(this.currentAim).map(k => {
           const a = this.currentAim[k]
-          if (!a.startAt) a.startAt = this.currentTurn - 1
+          if (a.startAt === undefined) a.startAt = this.currentTurn - 1
+          const acc = parseInt(a.acc || 0)
+          const maxAccBonus = acc + 2 // Add here an Acc bonus field on Item like Extra Attack?
           const dif = this.currentTurn - a.startAt
           if (dif === 1) {
-            a.aimBonus += parseInt(a.acc) || 0
-          } else if (dif <= 3) {
+            a.aimBonus = acc
+          } else if (a.aimBonus < maxAccBonus) {
             a.aimBonus += 1
           }
         })
@@ -656,11 +657,7 @@ export class TokenActions {
       this.evaluateTurns = 0
     }
     if (lastManeuver !== 'aim') {
-      Object.keys(this.currentAim).map(k => {
-        const a = this.currentAim[k]
-        a.aimBonus = 0
-        a.startAt = 0
-      })
+      this.currentAim = this._getInitialAim()
     }
     if (lastManeuver !== 'move' && this.moveTurns > 0) {
       this.moveTurns = 0

@@ -3031,6 +3031,10 @@ details .popup.square5x4 {
 .me-at.maneuver span {
   background-color: #c5360b;
 }
+.me-at.active-effect span {
+  background-color: rgba(90, 9, 231, 0.55);
+}
+
 .me-mod-tips {
   margin: 4px;
   width: 100%;
